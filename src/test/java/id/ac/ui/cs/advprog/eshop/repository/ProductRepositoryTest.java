@@ -66,4 +66,59 @@ class ProductRepositoryTest {
         assertEquals(product2.getProductId(), savedProduct.getProductId());
         assertFalse(productIterator.hasNext());
     }
+
+    @Test
+    void testEditProductFound() {
+        Product product = new Product();
+        product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        product.setProductName("Sampo Cap Bambang");
+        product.setProductQuantity(100);
+        productRepository.create(product);
+
+        Product updatedProduct = new Product();
+        updatedProduct.setProductId(product.getProductId());
+        updatedProduct.setProductName("Sampo Cap Budi");
+        updatedProduct.setProductQuantity(50);
+        productRepository.update(updatedProduct);
+
+        Product savedProduct = productRepository.findById(product.getProductId());
+        assertEquals(updatedProduct.getProductId(), savedProduct.getProductId());
+        assertEquals("Sampo Cap Budi", savedProduct.getProductName());
+        assertEquals(50, savedProduct.getProductQuantity());
+    }
+
+    @Test
+    void testEditProductNotFound() {
+        Product nonExistentProduct = new Product();
+        nonExistentProduct.setProductId("id-ngasal");
+        nonExistentProduct.setProductName("Barang Gaib");
+
+        Product result = productRepository.update(nonExistentProduct);
+        assertNull(result);
+    }
+    @Test
+    void testDeleteProductFound() {
+        Product product = new Product();
+        product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        product.setProductName("Sampo Cap Bambang");
+        productRepository.create(product);
+
+        productRepository.delete(product.getProductId());
+
+        Iterator<Product> productIterator = productRepository.findAll();
+        assertFalse(productIterator.hasNext());
+    }
+
+    @Test
+    void testDeleteProductNotFound() {
+        Product product = new Product();
+        product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        product.setProductName("Sampo Cap Bambang");
+        productRepository.create(product);
+
+        productRepository.delete("id-salah");
+
+        Product savedProduct = productRepository.findById(product.getProductId());
+        assertNotNull(savedProduct);
+    }
 }
