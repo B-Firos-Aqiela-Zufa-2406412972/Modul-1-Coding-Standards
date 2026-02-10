@@ -8,9 +8,9 @@ group = "id.ac.ui.cs.advprog"
 version = "0.0.1-SNAPSHOT"
 description = "eshop"
 
-val seleniumJavaVersion = "4.14.1"
-val seleniumJupiterVersion = "5.0.1"
-val webdrivermanagerVersion = "5.6.3"
+val seleniumJavaVersion = "4.21.0"
+val seleniumJupiterVersion = "5.1.1"
+val webdrivermanagerVersion = "5.9.2"
 
 java {
     toolchain {
