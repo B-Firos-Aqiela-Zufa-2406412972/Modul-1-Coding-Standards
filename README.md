@@ -1,0 +1,11 @@
+# Refleksi Tutorial Module 1
+
+## Refleksi 1
+dalam pengerjaan Tutorial Modul 1 ini, saya sudah menerapkan beberapa prinsip **Clean Code**, beberapa prinsip yang saya terapkan adalah pemberian nama variable dan metode yang bermakna seperti ProductRepository dan TestEditProductFound. Hal ini saya lakukan untuk memudahkan dalam membaca dan memahami kode tanpa perlu banyak komentar. Lalu, Saya juga menerapkan prinsip Single Responsibility, yaitu setiap kelas memiliki tanggung jawab yang spesifik. Saya juga menerapkan prinsip Secure Coding yaitu dengan menggunakan `UUID.randomUUid()`.
+
+kesalahan pada source code yang saya sadari adalah tidak adanya input handling atau input validation, solusi yang saya temukan dapat menambahkan anotasi `@NotBlank` untuk nama produk dan `min(0)` untuk jumlah barang. Kesalahan lainnya pada code adalah tidak adanya error handling pada productRepository, karena saat ini productRepository masih masih mengembalikan nilai `null` ketika data tidak ditemukan seharusnya kita membuat customException untuk hal tersebut.
+
+## Refleksi 2
+1. Setelah membuat unit test, Saya menjadi lebih percara terhadap kode saya. unit test juga mengurangi resiko regresi jika terjadi perubahan kode di masa depan. Untuk kuantitas jumlah tes sebaiknya disesuaikan dengan kompleksitas code, Sehingga semua skenario utama kode terverifikasi secara sempurna. kita juga bisa menggunakan coverage sebagai acuan apakah jumlah tes kita sudah cukup atau belum meskipun coverage 100% bukan berarti code kita bebas dari bug.
+
+2. Pembuatan functional test suite baru yang digunakan untuk memverifikasi jumlah item akan menurunkan kualitas kebersihan kode. Hal ini karna kita melanggar prinsip Dont Repeat Yourself atau DRY. Masalah utamanya adalah kita melakukan pengulangan kode pada bagian pengaturan `@LocalServerPort`, pengambilan nilai `@Value`, dan insialisi metode `@BeforeEach`. Solusi yang dapat dilakukan adalah melakukan refactoring dengan menerapkan sebuah Class yang berisi seluruh prosedur setup dan variable umum tersebut.
