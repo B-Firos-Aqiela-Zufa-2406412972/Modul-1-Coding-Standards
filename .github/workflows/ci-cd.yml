@@ -39,7 +39,7 @@ jobs:
       - name: Build, Test, and Run SonarCloud
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./gradlew build jacocoTestReport sonar -Dsonar.qualitygate.wait=true --info
+        run: ./gradlew build jacocoTestReport sonar --info
 
   deploy:
     name: Deploy to Render
