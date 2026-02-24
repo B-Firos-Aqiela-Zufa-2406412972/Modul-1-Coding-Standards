@@ -1,15 +1,15 @@
-name: SonarQube
+name: CI/CD Pipeline
 
 on:
   push:
     branches:
-      - main
+      - "**"
   pull_request:
     types: [opened, synchronize, reopened]
 
 jobs:
-  build:
-    name: Build and analyze
+  build-and-analyze:
+    name: Build and Analyze
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -36,7 +36,24 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
 
-      - name: Build and analyze
+      - name: Build, Test, and Run SonarCloud
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./gradlew build jacocoTestReport sonar --info
+        run: ./gradlew build jacocoTestReport sonar -Dsonar.qualitygate.wait=true --info
+
+  deploy:
+    name: Deploy to Render
+    needs: build-and-analyze
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hit Render Deploy Hook
+        env:
+          DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$DEPLOY_HOOK_URL" ]; then
+            echo "Error: RENDER_DEPLOY_HOOK secret is missing."
+            exit 1
+          fi
+          echo "Triggering deployment on Render..."
+          curl -X POST "$DEPLOY_HOOK_URL"
