@@ -121,4 +121,44 @@ class ProductRepositoryTest {
         Product savedProduct = productRepository.findById(product.getProductId());
         assertNotNull(savedProduct);
     }
+
+    @Test
+    void testCreateProductWithNullId() {
+        Product product = new Product();
+        product.setProductName("Sampo Cap Tanpa ID");
+        product.setProductQuantity(10);
+
+        Product savedProduct = productRepository.create(product);
+
+        assertNotNull(savedProduct.getProductId());
+        assertEquals("Sampo Cap Tanpa ID", savedProduct.getProductName());
+    }
+
+    @Test
+    void testFindByIdIfEmptyAndNotFound() {
+        assertNull(productRepository.findById("some-random-id"));
+
+        Product product1 = new Product();
+        product1.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        productRepository.create(product1);
+
+        assertNull(productRepository.findById("wrong-id"));
+    }
+
+    @Test
+    void testUpdateProductNotFound() {
+        Product product1 = new Product();
+        product1.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        productRepository.create(product1);
+
+        // Try to update using a different product ID that isn't in the list
+        Product product2 = new Product();
+        product2.setProductId("id-ngasal");
+        product2.setProductName("Barang Gaib");
+
+        Product result = productRepository.update(product2);
+
+        // Assert that it correctly returns null because it looped through the list and found no match
+        assertNull(result);
+    }
 }
