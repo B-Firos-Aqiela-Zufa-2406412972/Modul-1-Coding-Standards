@@ -66,8 +66,16 @@ public class ProductController {
 @Controller
 @RequestMapping("/car")
 class CarController extends ProductController{
+
+    private final CarServiceImpl carservice;
+
+    // We ask Spring to provide both services...
     @Autowired
-    private CarServiceImpl carservice;
+    public CarController(ProductService productService, CarServiceImpl carservice) {
+        super(productService);
+        this.carservice = carservice;
+    }
+
 
     @GetMapping("/createCar")
     public String createCarPage(Model model) {
