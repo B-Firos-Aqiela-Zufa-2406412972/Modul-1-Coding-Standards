@@ -20,43 +20,42 @@ public class CarController {
         this.carService = carService;
     }
 
-    @GetMapping("/create") // Standardized path
+    @GetMapping("/create")
     public String createCarPage(Model model) {
         Car car = new Car();
         model.addAttribute("car", car);
-        return "createCar"; // This must match your HTML filename exactly!
+        return "createCar";
     }
 
-    @PostMapping("/create") // Standardized path
+    @PostMapping("/create")
     public String createCarPost(@ModelAttribute Car car, Model model){
         carService.create(car);
-        return "redirect:list"; // Fixes the 404 by redirecting to the new /list path
+        return "redirect:list";
     }
 
-    @GetMapping("/list") // Fixes the 404 error path!
+    @GetMapping("/list")
     public String carListPage(Model model){
         List<Car> allCars = carService.findAll();
         model.addAttribute("cars", allCars);
-        return "carList"; // This must match your HTML filename exactly!
+        return "carList";
     }
 
     @GetMapping("/edit/{carId}")
     public String editCarPage(@PathVariable String carId, Model model) {
         Car car = carService.findById(carId);
         model.addAttribute("car", car);
-        return "editCar"; // This must match your HTML filename exactly!
+        return "editCar";
     }
 
-    @PostMapping("/edit") // Standardized path
+    @PostMapping("/edit")
     public String editCarPost(@ModelAttribute Car car, Model model) {
-        // Updated to use getId() since Car now inherits from Product
         carService.update(car);
         return "redirect:list";
     }
 
-    @PostMapping("/delete") // Standardized path
+    @PostMapping("/delete")
     public String deleteCar(@RequestParam("carId") String carId) {
-        carService.deleteCarById(carId);
+        carService.delete(carId);
         return "redirect:list";
     }
 }
