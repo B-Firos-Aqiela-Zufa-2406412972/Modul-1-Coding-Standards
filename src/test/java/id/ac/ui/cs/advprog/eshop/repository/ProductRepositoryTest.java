@@ -103,7 +103,7 @@ class ProductRepositoryTest {
         product.setProductName("Sampo Cap Bambang");
         productRepository.create(product);
 
-        productRepository.delete(product.getProductId());
+        productRepository.delete(product.getId());
 
         Iterator<Product> productIterator = productRepository.findAll();
         assertFalse(productIterator.hasNext());
@@ -112,8 +112,8 @@ class ProductRepositoryTest {
     @Test
     void testDeleteProductNotFound() {
         Product product = new Product();
-        product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
-        product.setProductName("Sampo Cap Bambang");
+        product.setId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        product.setName("Sampo Cap Bambang");
         productRepository.create(product);
 
         productRepository.delete("id-salah");

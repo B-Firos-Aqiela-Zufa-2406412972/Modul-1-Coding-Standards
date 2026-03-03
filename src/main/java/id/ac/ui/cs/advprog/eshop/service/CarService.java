@@ -6,7 +6,7 @@ import java.util.List;
 public interface CarService {
     Car create(Car car);
     List<Car> findAll();
-    Car findById(String carId);
-    void update(String carId, Car car);
-    void deleteCarById(String carId);
+    Car findById(String id);
+    Car update(Car car); // Adjusted to match ProductService
+    void delete(String id); // Renamed from deleteCarById
 }

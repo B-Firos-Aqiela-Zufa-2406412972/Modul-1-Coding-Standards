@@ -75,14 +75,14 @@ class ProductServiceImplTest {
         Product result = productService.update(product);
 
         assertNotNull(result);
-        assertEquals(product.getProductId(), result.getProductId());
+        assertEquals(product.getId(), result.getId());
         verify(productRepository, times(1)).update(product);
     }
 
     @Test
     void testDelete() {
-        productService.delete(product.getProductId());
+        productService.delete(product.getId());
 
-        verify(productRepository, times(1)).delete(product.getProductId());
+        verify(productRepository, times(1)).delete(product.getId());
     }
 }
