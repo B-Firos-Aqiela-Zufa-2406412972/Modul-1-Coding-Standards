@@ -32,9 +32,9 @@ class ProductControllerTest {
     @BeforeEach
     void setUp() {
         product = new Product();
-        product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
-        product.setProductName("Sampo Cap Bambang");
-        product.setProductQuantity(100);
+        product.setId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        product.setName("Sampo Cap Bambang");
+        product.setQuantity(100);
     }
 
     @Test
@@ -71,9 +71,9 @@ class ProductControllerTest {
 
     @Test
     void testEditProductPage() throws Exception {
-        when(productService.findById(product.getProductId())).thenReturn(product);
+        when(productService.findById(product.getId())).thenReturn(product);
 
-        mockMvc.perform(get("/product/edit/" + product.getProductId()))
+        mockMvc.perform(get("/product/edit/" + product.getId()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("EditProduct"))
                 .andExpect(model().attributeExists("product"))
@@ -94,10 +94,10 @@ class ProductControllerTest {
 
     @Test
     void testDeleteProduct() throws Exception {
-        mockMvc.perform(get("/product/delete/" + product.getProductId()))
+        mockMvc.perform(get("/product/delete/" + product.getId()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/product/list"));
 
-        verify(productService, times(1)).delete(product.getProductId());
+        verify(productService, times(1)).delete(product.getId());
     }
 }

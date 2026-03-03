@@ -30,16 +30,16 @@ class ProductServiceImplTest {
     @BeforeEach
     void setUp() {
         product = new Product();
-        product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
-        product.setProductName("Sampo Cap Bambang");
-        product.setProductQuantity(100);
+        product.setId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        product.setName("Sampo Cap Bambang");
+        product.setQuantity(100);
     }
 
     @Test
     void testCreate() {
         Product createdProduct = productService.create(product);
 
-        assertEquals(product.getProductId(), createdProduct.getProductId());
+        assertEquals(product.getId(), createdProduct.getId());
         verify(productRepository, times(1)).create(product);
     }
 
@@ -53,19 +53,19 @@ class ProductServiceImplTest {
         List<Product> result = productService.findAll();
 
         assertEquals(1, result.size());
-        assertEquals(product.getProductId(), result.get(0).getProductId());
+        assertEquals(product.getId(), result.get(0).getId());
         verify(productRepository, times(1)).findAll();
     }
 
     @Test
     void testFindById() {
-        when(productRepository.findById(product.getProductId())).thenReturn(product);
+        when(productRepository.findById(product.getId())).thenReturn(product);
 
-        Product result = productService.findById(product.getProductId());
+        Product result = productService.findById(product.getId());
 
         assertNotNull(result);
-        assertEquals(product.getProductId(), result.getProductId());
-        verify(productRepository, times(1)).findById(product.getProductId());
+        assertEquals(product.getId(), result.getId());
+        verify(productRepository, times(1)).findById(product.getId());
     }
 
     @Test
@@ -75,14 +75,14 @@ class ProductServiceImplTest {
         Product result = productService.update(product);
 
         assertNotNull(result);
-        assertEquals(product.getProductId(), result.getProductId());
+        assertEquals(product.getId(), result.getId());
         verify(productRepository, times(1)).update(product);
     }
 
     @Test
     void testDelete() {
-        productService.delete(product.getProductId());
+        productService.delete(product.getId());
 
-        verify(productRepository, times(1)).delete(product.getProductId());
+        verify(productRepository, times(1)).delete(product.getId());
     }
 }

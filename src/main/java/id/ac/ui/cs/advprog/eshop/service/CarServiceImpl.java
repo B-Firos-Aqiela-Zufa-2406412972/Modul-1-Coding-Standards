@@ -12,8 +12,13 @@ import java.util.List;
 @Service
 public class CarServiceImpl implements CarService {
 
+    private final CarRepository carRepository;
+
+    // DIP Fix: Using Constructor Injection instead of Field Injection
     @Autowired
-    private CarRepository carRepository;
+    public CarServiceImpl(CarRepository carRepository) {
+        this.carRepository = carRepository;
+    }
 
     @Override
     public Car create(Car car) {
@@ -30,17 +35,18 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car findById(String carId) {
-        return carRepository.findById(carId);
+    public Car findById(String id) {
+        return carRepository.findById(id);
     }
 
     @Override
-    public void update(String carId, Car car) {
-        carRepository.update(carId, car);
+    public Car update(Car car) {
+        // Adjusted to match the new signature (passing the car object directly)
+        return carRepository.update(car.getId(), car);
     }
 
     @Override
-    public void deleteCarById(String carId) {
-        carRepository.delete(carId);
+    public void delete(String id) {
+        carRepository.delete(id);
     }
 }
