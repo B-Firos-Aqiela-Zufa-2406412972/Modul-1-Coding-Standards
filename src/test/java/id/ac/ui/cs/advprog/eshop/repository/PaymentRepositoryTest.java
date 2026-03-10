@@ -26,9 +26,9 @@ class PaymentRepositoryTest {
 
         List<Product> products = new ArrayList<>();
         Product product = new Product();
-        product.setProductId("prod-1");
-        product.setProductName("Kecap");
-        product.setProductQuantity(1);
+        product.setId("prod-1");
+        product.setName("Kecap");
+        product.setQuantity(1);
         products.add(product);
 
         order = new Order("order-1", products, 12345678L, "Author");
