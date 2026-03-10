@@ -9,8 +9,9 @@ public class Payment {
     String method;
     String status;
     Map<String, String> paymentData;
+    Order order;
 
-    public Payment(String id, String method, Map<String, String> paymentData) {
+    public Payment(String id, String method, Map<String, String> paymentData, Order order) {
     }
 
     public void setStatus(String status) {
